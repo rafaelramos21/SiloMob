@@ -3,6 +3,6 @@ class LoginController {
   String senha = '';
 
   bool validarLogin() {
-    return usuario == 'admin' && senha == '1234';
+    return usuario == 'root' && senha == 'root';
   }
 }

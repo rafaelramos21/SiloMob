@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/input_field.dart';
 import '../widgets/login_button.dart';
 import '../controllers/login_controller.dart';
+import 'home_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: Text('Login Silo Manager')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -34,9 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
             LoginButton(
               onPressed: () {
                 if (controller.validarLogin()) {
-                  print('Login bem-sucedido!');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
                 } else {
-                  print('Usuário ou senha incorretos');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Usuário ou senha incorretos')),
+                  );
                 }
               },
             ),
