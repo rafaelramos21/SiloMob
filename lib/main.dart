@@ -12,12 +12,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Silo Manager',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        scaffoldBackgroundColor: Colors.grey[200],
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue
+        ),
+        scaffoldBackgroundColor: Colors.grey[400],
         appBarTheme: AppBarTheme(
-          color: Colors.green,
+          color: Colors.lightGreen,
           elevation: 4,
           iconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            ),
         ),
         buttonTheme: ButtonThemeData(
           buttonColor: Colors.green,

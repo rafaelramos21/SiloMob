@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'lista_usuarios_page.dart';
 import '../models/usuarios.dart';
+import 'login_page.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? Key}) : super(key: Key);
@@ -15,11 +16,22 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página Inicial'),
+        title: Text('Silo Manager'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (Route<dynamic> route) => false,
+                );
+              }),
+        ],
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(

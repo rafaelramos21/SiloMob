@@ -17,11 +17,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login Silo Manager')),
+      appBar: AppBar(title: Center( child: Text('Silo Manager'))),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
+            const SizedBox(height: 50),
+            CircleAvatar(
+              radius: 80,
+              backgroundImage: AssetImage('assets/images/ScvcLogo.png'),
+            ),
+            const SizedBox(height: 50), 
             InputField(
               label: 'Usuário',
               onChanged: (value) => controller.usuario = value,
