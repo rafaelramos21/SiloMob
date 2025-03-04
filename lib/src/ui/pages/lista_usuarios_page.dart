@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/usuarios.dart';
+import '../../models/usuarios.dart';
 
 class ListaUsuariosPage extends StatelessWidget {
   final List<Usuario> usuarios;
@@ -11,6 +11,7 @@ class ListaUsuariosPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Usuários'),
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: usuarios.length,
@@ -18,10 +19,10 @@ class ListaUsuariosPage extends StatelessWidget {
           final usuario = usuarios[index];
           return ListTile(
             title: Center(
-              child: Text('Usuário: ${usuario.nome}'),
+              child: Text(usuario.nome),
             ),
             subtitle: Center(
-              child: Text('CPF: ${usuario.cpf}'),
+              child: Text('Cpf: ${usuario.cpf}'),
             ),
           );
         }

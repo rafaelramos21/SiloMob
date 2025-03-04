@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/input_field.dart';
 import '../widgets/login_button.dart';
-import '../controllers/login_controller.dart';
+import '../../controllers/login_controller.dart';
 import 'home_page.dart';
 
 class LoginScreen extends StatefulWidget {
