@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetosilo/src/ui/pages/caminhao_page.dart';
 import 'package:projetosilo/src/ui/pages/grupos_page.dart';
-import 'package:projetosilo/src/ui/pages/lista_usuarios_page.dart';
+import 'package:projetosilo/src/ui/pages/listagens/lista_usuarios_page.dart';
 import 'package:projetosilo/src/ui/pages/produtor_page.dart';
 import 'package:projetosilo/src/ui/pages/propriedade_page.dart';
 import 'package:projetosilo/src/ui/pages/talhao_page.dart';
