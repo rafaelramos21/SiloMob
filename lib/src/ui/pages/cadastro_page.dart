@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:projetosilo/src/ui/pages/caminhao_page.dart';
 import 'package:projetosilo/src/ui/pages/grupos_page.dart';
-import 'package:projetosilo/src/ui/pages/listagens/lista_usuarios_page.dart';
 import 'package:projetosilo/src/ui/pages/produtor_page.dart';
 import 'package:projetosilo/src/ui/pages/propriedade_page.dart';
 import 'package:projetosilo/src/ui/pages/talhao_page.dart';
+import 'package:projetosilo/src/ui/pages/usuario_page.dart';
 import 'motorista_page.dart';
-import '../../models/usuarios.dart';
+import '../../models/produtor.dart';
 
-class CadastroPage extends StatelessWidget{
-  CadastroPage({super.key});
+class CadastroPage extends StatefulWidget{
+  final List<Produtor> produtores;
 
-//Usuario Test
-final List<Usuario> usuarios = [
-    Usuario(nome: 'Rafael Ribeiro Ramos', cpf: '47567271826'),
-    Usuario(nome: 'João Pedro Ruy', cpf: '12345678900'),
-  ];
+  const CadastroPage({Key? key, required this.produtores}) : super(key: key);
+  
+   @override
+  _CadastroPageState createState() => _CadastroPageState();
+}
 
+class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +94,7 @@ final List<Usuario> usuarios = [
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListaUsuariosPage(usuarios: usuarios),
+                    builder: (context) => UsuarioPage()
                   ),
                 );
               },

@@ -1,6 +1,6 @@
 class Usuario {
   String nome;
-  String cpf;
+  String senha;
 
-  Usuario({required this.nome, required this.cpf});
+  Usuario({required this.nome, required this.senha});
 }

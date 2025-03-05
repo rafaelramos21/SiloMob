@@ -7,7 +7,6 @@ import 'cadastro_page.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? Key}) : super(key: Key);
 
-  //Usuarios Teste
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +29,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+           //Text('Bem vindo: ${usuarioLogado?.nome ?? "Usuário"}'),
            ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CadastroPage(),
+                  builder: (context) => CadastroPage(produtores: [],),
                 ),
               );
             },

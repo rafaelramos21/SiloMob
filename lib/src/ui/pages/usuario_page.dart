@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:projetosilo/src/ui/pages/listagens/lista_caminhao_page.dart';
-import '../pages/cadastros/cadastro_caminhao.dart';
-import '../../models/caminhao.dart';
+import 'package:projetosilo/src/models/usuarios.dart';
+import 'package:projetosilo/src/ui/pages/cadastros/cadastro_usuario.dart';
+import 'package:projetosilo/src/ui/pages/listagens/lista_usuarios_page.dart';
 
-class CaminhaoPage extends StatefulWidget{
-  const CaminhaoPage({super.key});
+class UsuarioPage extends StatefulWidget {
+  const UsuarioPage({super.key});
 
   @override
-  _CaminhaoPageState createState() => _CaminhaoPageState();
+  _UsuarioPageState createState() => _UsuarioPageState();
 }
 
-class _CaminhaoPageState extends State<CaminhaoPage> {
-  List<Caminhao> caminhoes = [];
+class _UsuarioPageState extends State<UsuarioPage> {
+  List<Usuario> usuarios= [];
 
-  void _atualizarListaCaminhao(Caminhao caminhao) {
+  void _atualizarListaUsuarios(Usuario usuario) {
     setState(() {
-      caminhoes.add(caminhao);
+      usuarios.add(usuario);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Caminhões'),
+        title: const Text('Usuarios'),
         centerTitle: true,
       ),
       body: Center(
@@ -35,11 +35,11 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListaCaminhaoPage(caminhaoList: caminhoes)
+                    builder: (context) => ListaUsuariosPage(usuariosList: usuarios)
                   ),
                 );
               },
-              child: Text('Lista de Motoristas'),
+              child: Text('Lista de Usuarios'),
             ),
             SizedBox(height: 16,),
             ElevatedButton(
@@ -48,11 +48,11 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CadastroCaminhaoPage(onCaminhaoAdicionado: _atualizarListaCaminhao),
+                    builder: (context) => CadastroUsuarioPage(onUsuarioAdicionado: _atualizarListaUsuarios),
                   ),
                 );
               },
-              child: const Text('Cadastrar Motorista'),
+              child: const Text('Cadastrar Usuario'),
             ),
           ],
         ),
