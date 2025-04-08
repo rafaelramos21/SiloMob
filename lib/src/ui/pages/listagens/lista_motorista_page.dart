@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
 import '../../../models/motorista.dart';
+import '../../../services/api_motorista.dart';
 
-class ListaMotoristaPage extends StatelessWidget {
-  final List<Motorista> motoristasList;
+class ListaMotoristaPage extends StatefulWidget {
+  @override
+  _ListaMotoristaPageState createState() => _ListaMotoristaPageState();
+}
 
-  ListaMotoristaPage({Key? key, required this.motoristasList}) : super(key: key);
+class _ListaMotoristaPageState extends State<ListaMotoristaPage> {
+  final ApiMotorista apiMotorista = ApiMotorista();
+  List<Motorista> motoristasList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarMotoristas();
+  }
+
+  void _carregarMotoristas() async {
+    try {
+      List<Motorista> motoristas = await apiMotorista.fetchMotoristas();
+      setState(() {
+        motoristasList = motoristas;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao carregar motoristas')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lista de Motoristas'),
-        centerTitle: true,
-      ),
-      body: ListView.builder(
-        itemCount: motoristasList.length,
-        itemBuilder: (context, index) {
-          final motorista = motoristasList[index];
-          return ListTile(
-            title: Center(
-              child: Text(motorista.nome),
+      appBar: AppBar(title: Text('Lista de Motoristas')),
+      body: motoristasList.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: motoristasList.length,
+              itemBuilder: (context, index) {
+                final motorista = motoristasList[index];
+                return ListTile(
+                  title: Center(child: Text(motorista.nome)),
+                  subtitle: Center(child: Text('CPF: ${motorista.cpf}')),
+                );
+              },
             ),
-            subtitle: Center(
-              child: Text('CPF: ${motorista.cpf}'),
-            ),
-          );
-        },
-      ),
     );
   }
 }
