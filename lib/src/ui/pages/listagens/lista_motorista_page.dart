@@ -42,7 +42,6 @@ class _ListaMotoristaPageState extends State<ListaMotoristaPage> {
                 final motorista = motoristasList[index];
                 return ListTile(
                   title: Center(child: Text(motorista.nome)),
-                  subtitle: Center(child: Text('CPF: ${motorista.cpf}')),
                 );
               },
             ),

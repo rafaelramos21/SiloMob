@@ -4,18 +4,17 @@ import '../models/motorista.dart';
 
 class ApiMotorista {
   final String baseUrl = 'https://silo-qk3e.onrender.com/api/motorista/';
-  final String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNTcwMjAxLCJpYXQiOjE3NDM1NTIyMDEsImp0aSI6ImM3NWFlYjIyZDJlZDQ4ZmU4OTA2NjNhOTFjMzVlMDFjIiwidXNlcl9pZCI6MX0.IPT4mod4DorNZZptvRsRsdrKW_F3tWx0v4AxVF3frhk';
+  final String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MTcwNzM1LCJpYXQiOjE3NDQxNTI3MzUsImp0aSI6ImQ3NWNjYzlmMTM5NDRmMWFhZjk4NDA1MjQ3M2MwYmVhIiwidXNlcl9pZCI6MX0.HCcMFznLzAh6aBDcSEphHcbjjqjOxDA7IQpPyldRh2k';
+
 
   // 🔹 Buscar lista de motoristas
   Future<List<Motorista>> fetchMotoristas() async {
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {
-        "Content-Type": "application/json",
         "Authorization": "Bearer $token",
       },
     );
-
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
       return body.map((e) => Motorista.fromJson(e)).toList();
@@ -30,11 +29,10 @@ class ApiMotorista {
       Uri.parse(baseUrl),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Token $token",
+        "Authorization": "Bearer $token",
       },
       body: jsonEncode(motorista.toJson()),
     );
-
     return response.statusCode == 201;
   }
 }

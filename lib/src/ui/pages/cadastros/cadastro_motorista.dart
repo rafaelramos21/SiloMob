@@ -18,10 +18,11 @@ class _CadastroMotoristaPageState extends State<CadastroMotoristaPage> {
 
   void _salvarMotorista() async {
     final nome = _nomeController.text;
-    final cpf = _cpfController.text;
 
-    if (nome.isNotEmpty && cpf.isNotEmpty) {
-      final novoMotorista = Motorista(nome: nome, cpf: cpf);
+
+    if (nome.isNotEmpty) {
+      final novoMotorista = Motorista(nome: nome);
+
       
       bool sucesso = await apiMotorista.createMotorista(novoMotorista);
       
@@ -51,11 +52,6 @@ class _CadastroMotoristaPageState extends State<CadastroMotoristaPage> {
             TextField(
               controller: _nomeController,
               decoration: InputDecoration(labelText: 'Nome'),
-            ),
-            TextField(
-              controller: _cpfController,
-              decoration: InputDecoration(labelText: 'CPF'),
-              keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),
             ElevatedButton(
