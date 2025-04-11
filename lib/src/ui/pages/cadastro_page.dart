@@ -5,6 +5,7 @@ import 'package:projetosilo/src/ui/pages/produtor_page.dart';
 import 'package:projetosilo/src/ui/pages/propriedade_page.dart';
 import 'package:projetosilo/src/ui/pages/talhao_page.dart';
 import 'package:projetosilo/src/ui/pages/usuario_page.dart';
+import 'package:projetosilo/src/ui/pages/placa_page.dart';
 import 'motorista_page.dart';
 import '../../models/produtor.dart';
 
@@ -51,6 +52,18 @@ class _CadastroPageState extends State<CadastroPage> {
                 );
               },
               child: Text('Caminhões'),
+            ),
+            SizedBox(height: 16,),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlacaPage()
+                  ),
+                );
+              },
+              child: Text('Placas'),
             ),
             SizedBox(height: 16,),
             ElevatedButton(

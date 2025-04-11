@@ -42,14 +42,19 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
               itemCount: tickets.length,
               itemBuilder: (context, index) {
                 final t = tickets[index];
+                print(t.status);
                 return Card(
+                  color: t.status == 'ConcluÃ­do' ? Colors.green[200] : Colors.yellow[200],
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Status: ${t.status}', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'Status: ${t.status}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         Text('Data: ${t.createdAt}'),
                         Text('Ticket: ${t.numeroTicket}'),
                         Text('Sacas: ${t.sacas ?? '-'}'),

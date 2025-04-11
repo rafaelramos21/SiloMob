@@ -39,7 +39,7 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
                   ),
                 );
               },
-              child: Text('Lista de Motoristas'),
+              child: Text('Lista de Caminhões'),
             ),
             SizedBox(height: 16,),
             ElevatedButton(
@@ -52,7 +52,7 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
                   ),
                 );
               },
-              child: const Text('Cadastrar Motorista'),
+              child: const Text('Cadastrar Caminhões'),
             ),
           ],
         ),

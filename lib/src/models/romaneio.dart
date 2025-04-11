@@ -2,7 +2,7 @@ class Romaneio {
   final String createdAt;
   final String status;
   final int numeroTicket;
-  final int? sacas;
+  final double? sacas;
   final double? umidadeTeor;
   final double? avariadoTeor;
   final double? impurezaTeor;
@@ -28,7 +28,7 @@ class Romaneio {
     createdAt: json['created_at'] ?? '',
     status: json['status'] ?? '',
     numeroTicket: json['numero_ticket'] ?? 0,
-    sacas: json['sacas'] != null ? int.tryParse(json['sacas'].toString()) : null,
+    sacas: json['sacas'] != null ? double.tryParse(json['sacas'].toString()) : null,
     umidadeTeor: json['umidade_teor'] != null ? double.tryParse(json['umidade_teor'].toString()) : null,
     avariadoTeor: json['avariado_teor'] != null ? double.tryParse(json['avariado_teor'].toString()) : null,
     impurezaTeor: json['impureza_teor'] != null ? double.tryParse(json['impureza_teor'].toString()) : null,

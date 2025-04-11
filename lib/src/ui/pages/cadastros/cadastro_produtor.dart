@@ -1,51 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../controllers/produtor_provider.dart';
-import '../../../models/produtor.dart';
+import '../../../services/api_produtor.dart';
 
 class CadastroProdutorPage extends StatefulWidget {
-  CadastroProdutorPage({Key? key}) : super(key: key);
+  final VoidCallback onProdutorAdicionado;
+
+  const CadastroProdutorPage({Key? key, required this.onProdutorAdicionado}) : super(key: key);
 
   @override
-  _CadastroProdutorPageState createState() => _CadastroProdutorPageState();
+  State<CadastroProdutorPage> createState() => _CadastroProdutorPageState();
 }
 
 class _CadastroProdutorPageState extends State<CadastroProdutorPage> {
   final TextEditingController _nomeController = TextEditingController();
+  final ApiProdutor apiProdutor = ApiProdutor();
 
-  void _salvarProdutor() {
+  void _salvar() async {
     final nome = _nomeController.text;
 
     if (nome.isNotEmpty) {
-      final novoProdutor = Produtor(nome: nome, propriedade: []);
-
-      // Adicionando diretamente no Provider
-      Provider.of<ProdutorProvider>(context, listen: false).adicionarProdutor(novoProdutor);
-
-      Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Preencha todos os campos!')),
-      );
+      try {
+        await apiProdutor.adicionarProdutor(nome);
+        widget.onProdutorAdicionado();
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao cadastrar produtor')));
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro de Produtor')),
+      appBar: AppBar(title: Text('Cadastrar Produtor')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _nomeController,
-              decoration: const InputDecoration(labelText: 'Nome'),
+              decoration: InputDecoration(labelText: 'Nome do Produtor'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _salvarProdutor,
-              child: const Text('Salvar'),
+              onPressed: _salvar,
+              child: Text('Salvar'),
             ),
           ],
         ),
