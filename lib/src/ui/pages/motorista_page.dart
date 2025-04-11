@@ -20,23 +20,40 @@ class MotoristaPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: Icon(Icons.list_alt),
+              label: Text('Lista de Motoristas'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(220, 60),
+                textStyle: TextStyle(fontSize: 18),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaMotoristaPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListaMotoristaPage()),
+                );
               },
-              child: Text('Lista de Motoristas'),
             ),
             SizedBox(height: 16),
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: Icon(Icons.person_add_alt_1),
+              label: Text('Cadastrar Motorista'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(220, 60),
+                textStyle: TextStyle(fontSize: 18),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CadastroMotoristaPage(onMotoristaAdicionado: () => _atualizarListaMotoristas(context)),
+                    builder: (context) => CadastroMotoristaPage(
+                      onMotoristaAdicionado: () => _atualizarListaMotoristas(context),
+                    ),
                   ),
                 );
               },
-              child: Text('Cadastrar Motorista'),
             ),
           ],
         ),

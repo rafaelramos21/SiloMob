@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/input_field.dart';
-import '../widgets/login_button.dart';
 import '../../controllers/login_controller.dart';
 import 'home_page.dart';
 
@@ -17,17 +16,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center( child: Text('Silo Manager'))),
+      appBar: AppBar(title: const Center(child: Text('Silo Manager'))),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             const SizedBox(height: 50),
-            CircleAvatar(
+            const CircleAvatar(
               radius: 80,
               backgroundImage: AssetImage('assets/images/ScvcLogo.png'),
             ),
-            const SizedBox(height: 50), 
+            const SizedBox(height: 50),
             InputField(
               label: 'Usuário',
               onChanged: (value) => controller.usuario = value,
@@ -37,17 +36,24 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true,
               onChanged: (value) => controller.senha = value,
             ),
-            SizedBox(height: 20),
-            LoginButton(
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.login),
+              label: const Text('Entrar'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(220, 60),
+                textStyle: const TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
                 if (controller.validarLogin()) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Usuário ou senha incorretos')),
+                    const SnackBar(content: Text('Usuário ou senha incorretos')),
                   );
                 }
               },

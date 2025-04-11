@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projetosilo/src/ui/pages/caminhao_page.dart';
-import 'package:projetosilo/src/ui/pages/grupos_page.dart';
 import 'package:projetosilo/src/ui/pages/produtor_page.dart';
 import 'package:projetosilo/src/ui/pages/propriedade_page.dart';
 import 'package:projetosilo/src/ui/pages/talhao_page.dart';
@@ -9,12 +8,12 @@ import 'package:projetosilo/src/ui/pages/placa_page.dart';
 import 'motorista_page.dart';
 import '../../models/produtor.dart';
 
-class CadastroPage extends StatefulWidget{
+class CadastroPage extends StatefulWidget {
   final List<Produtor> produtores;
 
   const CadastroPage({Key? key, required this.produtores}) : super(key: key);
-  
-   @override
+
+  @override
   _CadastroPageState createState() => _CadastroPageState();
 }
 
@@ -26,106 +25,116 @@ class _CadastroPageState extends State<CadastroPage> {
         title: const Text('Cadastros'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: ListView(
           children: [
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.person,
+              label: 'Motoristas',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => MotoristaPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => MotoristaPage()),
                 );
               },
-              child: Text('Motoristas'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.local_shipping,
+              label: 'Caminhões',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => CaminhaoPage()
-                  ),
+                  MaterialPageRoute(builder: (context) => CaminhaoPage()),
                 );
               },
-              child: Text('Caminhões'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.confirmation_number,
+              label: 'Placas',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PlacaPage()
-                  ),
+                  MaterialPageRoute(builder: (context) => PlacaPage()),
                 );
               },
-              child: Text('Placas'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.agriculture,
+              label: 'Produtores',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProdutorPage()
-                  ),
+                  MaterialPageRoute(builder: (context) => ProdutorPage()),
                 );
               },
-              child: Text('Produtores'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.home_work,
+              label: 'Propriedades',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PropriedadePage()
-                  ),
+                  MaterialPageRoute(builder: (context) => PropriedadePage()),
                 );
               },
-              child: Text('Propriedades'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.landscape,
+              label: 'Talhões',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TalhaoPage()
-                  ),
+                  MaterialPageRoute(builder: (context) => TalhaoPage()),
                 );
               },
-              child: Text('Talhões'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            _buildMenuButton(
+              icon: Icons.people,
+              label: 'Usuários',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => UsuarioPage()
-                  ),
+                  MaterialPageRoute(builder: (context) => UsuarioPage()),
                 );
               },
-              child: Text('Usuários'),
-            ),
-            SizedBox(height: 16,),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GruposPage()
-                  ),
-                );
-              },
-              child: Text('Grupos'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 100,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            elevation: 4,
+            backgroundColor: Colors.blueAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          onPressed: onPressed,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 36, color: Colors.white),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: const TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

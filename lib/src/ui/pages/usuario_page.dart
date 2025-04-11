@@ -11,7 +11,7 @@ class UsuarioPage extends StatefulWidget {
 }
 
 class _UsuarioPageState extends State<UsuarioPage> {
-  List<Usuario> usuarios= [];
+  List<Usuario> usuarios = [];
 
   void _atualizarListaUsuarios(Usuario usuario) {
     setState(() {
@@ -23,36 +23,49 @@ class _UsuarioPageState extends State<UsuarioPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Usuarios'),
+        title: const Text('Usuários'),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: const Icon(Icons.list_alt),
+              label: const Text('Lista de Usuários'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(220, 60),
+                textStyle: const TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListaUsuariosPage(usuariosList: usuarios)
+                    builder: (context) => ListaUsuariosPage(usuariosList: usuarios),
                   ),
                 );
               },
-              child: Text('Lista de Usuarios'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.person_add_alt_1),
+              label: const Text('Cadastrar Usuário'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(220, 60),
+                textStyle: const TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
-                // Passa a função de atualização da lista para a página de cadastro
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CadastroUsuarioPage(onUsuarioAdicionado: _atualizarListaUsuarios),
+                    builder: (context) => CadastroUsuarioPage(
+                      onUsuarioAdicionado: _atualizarListaUsuarios,
+                    ),
                   ),
                 );
               },
-              child: const Text('Cadastrar Usuario'),
             ),
           ],
         ),

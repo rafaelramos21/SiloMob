@@ -3,7 +3,7 @@ import 'package:projetosilo/src/ui/pages/listagens/lista_caminhao_page.dart';
 import '../pages/cadastros/cadastro_caminhao.dart';
 import '../../models/caminhao.dart';
 
-class CaminhaoPage extends StatefulWidget{
+class CaminhaoPage extends StatefulWidget {
   const CaminhaoPage({super.key});
 
   @override
@@ -18,7 +18,7 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
       caminhoes.add(caminhao);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,29 +30,42 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: Icon(Icons.list_alt),
+              label: Text('Lista de Caminhões'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(220, 60),
+                textStyle: TextStyle(fontSize: 18),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListaCaminhaoPage(caminhaoList: caminhoes)
+                    builder: (context) => ListaCaminhaoPage(caminhaoList: caminhoes),
                   ),
                 );
               },
-              child: Text('Lista de Caminhões'),
             ),
-            SizedBox(height: 16,),
-            ElevatedButton(
+            SizedBox(height: 16),
+            ElevatedButton.icon(
+              icon: Icon(Icons.add_box),
+              label: Text('Cadastrar Caminhão'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(220, 60),
+                textStyle: TextStyle(fontSize: 18),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               onPressed: () {
-                // Passa a função de atualização da lista para a página de cadastro
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CadastroCaminhaoPage(onCaminhaoAdicionado: _atualizarListaCaminhao),
+                    builder: (context) => CadastroCaminhaoPage(
+                      onCaminhaoAdicionado: _atualizarListaCaminhao,
+                    ),
                   ),
                 );
               },
-              child: const Text('Cadastrar Caminhões'),
             ),
           ],
         ),

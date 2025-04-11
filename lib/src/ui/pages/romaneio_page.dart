@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/romaneio.dart';
 import '../../services/api_romaneio.dart';
+import 'dart:convert';
 
 class ListaRomaneioPage extends StatefulWidget {
   const ListaRomaneioPage({Key? key}) : super(key: key);
@@ -17,6 +18,11 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
   void initState() {
     super.initState();
     _carregarTickets();
+  }
+
+  String corrigircaracter(String textContent){
+    List<int> bytes = latin1.encode(textContent);
+    return utf8.decode(bytes);
   }
 
   void _carregarTickets() async {
@@ -42,9 +48,9 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
               itemCount: tickets.length,
               itemBuilder: (context, index) {
                 final t = tickets[index];
-                print(t.status);
+                print(corrigircaracter(t.status));
                 return Card(
-                  color: t.status == 'ConcluÃ­do' ? Colors.green[200] : Colors.yellow[200],
+                  color: corrigircaracter(t.status) == 'Concluído' ? Colors.green[200] : Colors.yellow[200],
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Padding(
                     padding: EdgeInsets.all(12),
@@ -52,7 +58,7 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status: ${t.status}',
+                          'Status: ${corrigircaracter(t.status)}',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text('Data: ${t.createdAt}'),
