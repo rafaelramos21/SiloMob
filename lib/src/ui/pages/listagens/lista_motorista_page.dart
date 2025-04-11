@@ -41,7 +41,19 @@ class _ListaMotoristaPageState extends State<ListaMotoristaPage> {
               itemBuilder: (context, index) {
                 final motorista = motoristasList[index];
                 return ListTile(
-                  title: Center(child: Text(motorista.nome)),
+                  title: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Nome:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 4),
+                        Text(motorista.nome),
+                      ],
+                    ),
+                  ),
                 );
               },
             ),
