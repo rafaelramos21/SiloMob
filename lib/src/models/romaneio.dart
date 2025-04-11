@@ -24,17 +24,18 @@ class Romaneio {
   });
 
   factory Romaneio.fromJson(Map<String, dynamic> json) {
-    return Romaneio(
-      createdAt: json['created_at'],
-      status: json['status'],
-      numeroTicket: json['numero_ticket'],
-      sacas: json['sacas'],
-      umidadeTeor: (json['umidade_teor'] as num?)?.toDouble(),
-      avariadoTeor: (json['avariado_teor'] as num?)?.toDouble(),
-      impurezaTeor: (json['impureza_teor'] as num?)?.toDouble(),
-      descontoTotal: (json['desconto_total'] as num?)?.toDouble(),
-      talhao: json['talhao'],
-      user: json['user'],
-    );
-  }
+  return Romaneio(
+    createdAt: json['created_at'] ?? '',
+    status: json['status'] ?? '',
+    numeroTicket: json['numero_ticket'] ?? 0,
+    sacas: json['sacas'] != null ? int.tryParse(json['sacas'].toString()) : null,
+    umidadeTeor: json['umidade_teor'] != null ? double.tryParse(json['umidade_teor'].toString()) : null,
+    avariadoTeor: json['avariado_teor'] != null ? double.tryParse(json['avariado_teor'].toString()) : null,
+    impurezaTeor: json['impureza_teor'] != null ? double.tryParse(json['impureza_teor'].toString()) : null,
+    descontoTotal: json['desconto_total'] != null ? double.tryParse(json['desconto_total'].toString()) : null,
+    talhao: json['talhao'] ?? 0,
+    user: json['user'] ?? 0,
+  );
+}
+
 }
