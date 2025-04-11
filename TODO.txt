@@ -1,1 +1,4 @@
--- Adicionar banco de dados
+-- Vincular Db da aplicação web
+-- Fazer o tratamento do charset que esta dando conflito(quando feito precisa ajustar no romaneio a cahamda de cor por status)
+-- Fazer as requisições de api que puxam vinculos por id
+-- Fazer o tratamento desses id's para pegar o valor real 
