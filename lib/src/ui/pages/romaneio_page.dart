@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/romaneio.dart';
 import '../../services/api_romaneio.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class ListaRomaneioPage extends StatefulWidget {
   const ListaRomaneioPage({Key? key}) : super(key: key);
@@ -20,37 +21,65 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
     _carregarTickets();
   }
 
-  String corrigircaracter(String textContent){
+  String corrigircaracter(String textContent) {
     List<int> bytes = latin1.encode(textContent);
     return utf8.decode(bytes);
   }
 
   void _carregarTickets() async {
-    try {
-      List<Romaneio> resultado = await apiTicket.fetchTickets();
-      setState(() {
-        tickets = resultado;
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao carregar tickets')),
-      );
+  try {
+    List<Romaneio> resultado = await apiTicket.fetchTickets();
+
+    resultado.sort((a, b) {
+      DateTime dataA = DateTime.parse(a.createdAt);
+      DateTime dataB = DateTime.parse(b.createdAt);
+      return dataB.compareTo(dataA); // mais recente primeiro
+    });
+
+    setState(() {
+      tickets = resultado;
+    });
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Erro ao carregar tickets')),
+    );
+  }
+}
+
+
+  Color? getCardColor(String status) {
+    switch (status) {
+      case 'Primeira pesagem':
+        return Colors.red[200];
+      case 'Classificação':
+        return Colors.orange[200];
+      case 'Segunda pesagem':
+        return Colors.yellow[200];
+      case 'Concluído':
+        return Colors.green[200];
+      default:
+        return Colors.grey[200];
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Romaneios'),centerTitle: true,),
+      appBar: AppBar(
+        title: Text('Romaneios'),
+        centerTitle: true,
+      ),
       body: tickets.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: tickets.length,
               itemBuilder: (context, index) {
                 final t = tickets[index];
-                print(corrigircaracter(t.status));
+                final statusCorrigido = corrigircaracter(t.status);
+                final cardColor = getCardColor(statusCorrigido);
+
                 return Card(
-                  color: corrigircaracter(t.status) == 'Concluído' ? Colors.green[200] : Colors.yellow[200],
+                  color: cardColor,
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Padding(
                     padding: EdgeInsets.all(12),
@@ -58,10 +87,10 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status: ${corrigircaracter(t.status)}',
+                          'Status: $statusCorrigido',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text('Data: ${t.createdAt}'),
+                        Text('Data: ${DateFormat("dd/MM/yyyy - HH:mm").format(DateTime.parse(t.createdAt))}',),
                         Text('Ticket: ${t.numeroTicket}'),
                         Text('Sacas: ${t.sacas ?? '-'}'),
                         Text('Umidade (%): ${t.umidadeTeor?.toStringAsFixed(2) ?? '-'}'),
