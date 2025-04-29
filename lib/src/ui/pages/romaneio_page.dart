@@ -3,6 +3,7 @@ import '../../models/romaneio.dart';
 import '../../services/api_romaneio.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import '../../utils/utf_correction.dart';
 
 class ListaRomaneioPage extends StatefulWidget {
   const ListaRomaneioPage({Key? key}) : super(key: key);
@@ -19,11 +20,6 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
   void initState() {
     super.initState();
     _carregarTickets();
-  }
-
-  String corrigircaracter(String textContent) {
-    List<int> bytes = latin1.encode(textContent);
-    return utf8.decode(bytes);
   }
 
   void _carregarTickets() async {
@@ -75,8 +71,8 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
               itemCount: tickets.length,
               itemBuilder: (context, index) {
                 final t = tickets[index];
-                final statusCorrigido = corrigircaracter(t.status);
-                final cardColor = getCardColor(statusCorrigido);
+                final cardColor = getCardColor(t.status);
+
 
                 return Card(
                   color: cardColor,
@@ -87,7 +83,7 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Status: $statusCorrigido',
+                          'Status: ${t.status}',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text('Data: ${DateFormat("dd/MM/yyyy - HH:mm").format(DateTime.parse(t.createdAt))}',),
@@ -97,8 +93,8 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
                         Text('Avariado (%): ${t.avariadoTeor?.toStringAsFixed(2) ?? '-'}'),
                         Text('Impureza (%): ${t.impurezaTeor?.toStringAsFixed(2) ?? '-'}'),
                         Text('Desconto total: ${t.descontoTotal?.toStringAsFixed(2) ?? '-'}'),
-                        Text('Talhão: ${t.talhao}'),
-                        Text('Usuário: ${t.user}'),
+                        Text('Talhão: ${t.talhao?.nome ?? '-'}'),
+                        Text('Usuário: ${t.user?.username ?? '-'}'),
                       ],
                     ),
                   ),

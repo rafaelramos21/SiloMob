@@ -1,35 +1,57 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/placa.dart';
+import '../utils/token_storage.dart';
+import '../utils/utf_correction.dart';
 
 class ApiPlaca {
-  final String baseUrl = 'http://127.0.0.1:8000/api/placa/';
-  final String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0OTE0MzEwLCJpYXQiOjE3NDQ4OTYzMTAsImp0aSI6ImMyMWU5MWNhYjBiZDQ3MDg4MDRlMjFhNGU4YTVmNDdlIiwidXNlcl9pZCI6MX0.BOc0lPTziqnAXoh8Xx8Sg4gXddV2Tk2Xsylgj7copIM';
+  final String baseUrl = 'https://silo-qk3e.onrender.com/api/placa/';
 
+  // Função para buscar todas as placas
   Future<List<Placa>> fetchPlacas() async {
+    final token = await TokenStorage.getToken();  // Pegando o token de autenticação
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {
-        "Authorization": "Bearer $token",
+        "Authorization": "Bearer $token",  // Enviando o token na requisição
       },
     );
+
     if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body);
-      return body.map((e) => Placa.fromJson(e)).toList();
+      try {
+        // Corrigir os bytes antes de decodificar
+        String correctedResponse = corrigirBytes(response.bodyBytes);
+        
+        // Usando correctedResponse para decodificar
+        List<dynamic> body = jsonDecode(correctedResponse);
+        
+        return body.map((e) {
+          return Placa.fromJson(e);
+        }).toList();  // Retorna a lista de Placa
+      } catch (e) {
+        throw Exception('Erro ao decodificar a resposta JSON: $e');
+      }
     } else {
       throw Exception('Erro ao carregar placas: ${response.body}');
     }
   }
 
+  // Função para adicionar uma placa
   Future<bool> createPlaca(Placa placa) async {
+    final token = await TokenStorage.getToken();  // Pegando o token de autenticação
     final response = await http.post(
       Uri.parse(baseUrl),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
+        "Authorization": "Bearer $token",  // Enviando o token na requisição
       },
-      body: jsonEncode(placa.toJson()),
+      body: jsonEncode(placa.toJson()),  // Usando o método toJson da Placa
     );
-    return response.statusCode == 201;
+
+    if (response.statusCode == 201) {
+      return true;  // Retorna true se o status da resposta for 201
+    } else {
+      throw Exception('Erro ao adicionar placa: ${response.body}');
+    }
   }
 }

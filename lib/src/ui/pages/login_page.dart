@@ -45,8 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 textStyle: const TextStyle(fontSize: 18),
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              onPressed: () {
-                if (controller.validarLogin()) {
+              onPressed: () async {
+                bool sucesso = await controller.validarLogin();
+                if (sucesso) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -57,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 }
               },
+
             ),
           ],
         ),

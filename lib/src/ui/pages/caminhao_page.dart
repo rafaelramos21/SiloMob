@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:projetosilo/src/ui/pages/listagens/lista_caminhao_page.dart';
-import '../pages/cadastros/cadastro_caminhao.dart';
+import '../../services/api_caminhao.dart';
 import '../../models/caminhao.dart';
+import 'listagens/lista_caminhao_page.dart';
 
 class CaminhaoPage extends StatefulWidget {
-  const CaminhaoPage({super.key});
+  const CaminhaoPage({Key? key}) : super(key: key);
 
   @override
   _CaminhaoPageState createState() => _CaminhaoPageState();
 }
 
 class _CaminhaoPageState extends State<CaminhaoPage> {
-  List<Caminhao> caminhoes = [];
+  late Future<List<Caminhao>> _caminhoes;
 
-  void _atualizarListaCaminhao(Caminhao caminhao) {
-    setState(() {
-      caminhoes.add(caminhao);
-    });
+  @override
+  void initState() {
+    super.initState();
+    _caminhoes = ApiCaminhao().fetchCaminhoes();  // Chama a API para buscar os caminhões
   }
 
   @override
@@ -31,40 +31,33 @@ class _CaminhaoPageState extends State<CaminhaoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              icon: Icon(Icons.list_alt),
-              label: Text('Lista de Caminhões'),
+              icon: const Icon(Icons.list_alt),
+              label: const Text('Lista de Caminhões'),
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(220, 60),
-                textStyle: TextStyle(fontSize: 18),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                minimumSize: const Size(220, 60),
+                textStyle: const TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ListaCaminhaoPage(caminhaoList: caminhoes),
+                    builder: (context) => ListaCaminhaoPage(caminhaoFuture: _caminhoes),  // Passa a Future para a lista
                   ),
                 );
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
-              icon: Icon(Icons.add_box),
-              label: Text('Cadastrar Caminhão'),
+              icon: const Icon(Icons.add_box),
+              label: const Text('Cadastrar Caminhão'),
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(220, 60),
-                textStyle: TextStyle(fontSize: 18),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                minimumSize: const Size(220, 60),
+                textStyle: const TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CadastroCaminhaoPage(
-                      onCaminhaoAdicionado: _atualizarListaCaminhao,
-                    ),
-                  ),
-                );
+                // Navegar para a página de cadastro de caminhão
               },
             ),
           ],

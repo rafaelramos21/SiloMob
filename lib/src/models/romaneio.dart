@@ -7,8 +7,8 @@ class Romaneio {
   final double? avariadoTeor;
   final double? impurezaTeor;
   final double? descontoTotal;
-  final int talhao;
-  final int user;
+  final Talhao? talhao;
+  final User? user;
 
   Romaneio({
     required this.createdAt,
@@ -19,8 +19,8 @@ class Romaneio {
     this.avariadoTeor,
     this.impurezaTeor,
     this.descontoTotal,
-    required this.talhao,
-    required this.user,
+    this.talhao,
+    this.user,
   });
 
   factory Romaneio.fromJson(Map<String, dynamic> json) {
@@ -33,9 +33,44 @@ class Romaneio {
     avariadoTeor: json['avariado_teor'] != null ? double.tryParse(json['avariado_teor'].toString()) : null,
     impurezaTeor: json['impureza_teor'] != null ? double.tryParse(json['impureza_teor'].toString()) : null,
     descontoTotal: json['desconto_total'] != null ? double.tryParse(json['desconto_total'].toString()) : null,
-    talhao: json['talhao'] ?? 0,
-    user: json['user'] ?? 0,
+    talhao: json['talhao'] != null ? Talhao.fromJson(json['talhao']) : null,
+    user: json['user'] != null ? User.fromJson(json['user']) : null,
   );
 }
 
 }
+
+class Talhao {
+  final int id;
+  final String nome;
+
+  Talhao({
+    required this.id,
+    required this.nome,
+  });
+
+  factory Talhao.fromJson(Map<String, dynamic> json) {
+    return Talhao(
+      id: json['id'],
+      nome: json['nome'],
+    );
+  }
+}
+
+class User {
+  final int id;
+  final String username;
+
+  User({
+    required this.id,
+    required this.username,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      username: json['username'],
+    );
+  }
+}
+

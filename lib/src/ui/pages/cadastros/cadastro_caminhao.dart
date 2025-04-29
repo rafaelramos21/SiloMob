@@ -4,7 +4,7 @@ import '../../../models/caminhao.dart';
 class CadastroCaminhaoPage extends StatefulWidget {
   final Function(Caminhao) onCaminhaoAdicionado;
 
-  CadastroCaminhaoPage({Key? key, required this.onCaminhaoAdicionado}) : super(key:key);
+  const CadastroCaminhaoPage({Key? key, required this.onCaminhaoAdicionado}) : super(key: key);
 
   @override
   _CadastroCaminhaoPageState createState() => _CadastroCaminhaoPageState();
@@ -14,15 +14,23 @@ class _CadastroCaminhaoPageState extends State<CadastroCaminhaoPage> {
   final TextEditingController _modeloController = TextEditingController();
   final TextEditingController _placaController = TextEditingController();
 
-  void _salvarCaminhao(){
-    final modelo = _modeloController.text;
-    final placa = _placaController.text;
+  void _salvarCaminhao() {
+    final modelo = _modeloController.text.trim();
+    final placa = _placaController.text.trim();
 
-    if (modelo.isNotEmpty && placa.isNotEmpty){
-      final novoCaminhao = Caminhao(modelo: modelo, placa: placa);
+    if (modelo.isNotEmpty && placa.isNotEmpty) {
+      // Criando um novo objeto Caminhao
+      final novoCaminhao = Caminhao(
+        id: 0,  // O ID é 0 pois ele ainda não existe, o backend gerará
+        createdAt: '',  // Deixe o campo vazio ou use um valor padrão
+        updatedAt: '',  // Deixe o campo vazio ou use um valor padrão
+        motorista: Motorista(id: 0, nome: ''),  // Se necessário, ajuste conforme o back-end
+        placa: Placa(id: 0, placa: placa, modelo: modelo),
+      );
+
       widget.onCaminhaoAdicionado(novoCaminhao);
       Navigator.pop(context);
-    }else{
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Preencha todos os campos!')),
       );
@@ -30,7 +38,7 @@ class _CadastroCaminhaoPageState extends State<CadastroCaminhaoPage> {
   }
 
   @override
-  Widget build(BuildContext content) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Cadastro de Caminhão')),
       body: Padding(
@@ -45,13 +53,13 @@ class _CadastroCaminhaoPageState extends State<CadastroCaminhaoPage> {
               controller: _placaController,
               decoration: const InputDecoration(labelText: 'Placa'),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _salvarCaminhao,
               child: const Text('Salvar'),
             ),
           ],
-        )
+        ),
       ),
     );
   }
