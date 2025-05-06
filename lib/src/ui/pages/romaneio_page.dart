@@ -95,6 +95,7 @@ class _ListaRomaneioPageState extends State<ListaRomaneioPage> {
                         Text('Desconto total: ${t.descontoTotal?.toStringAsFixed(2) ?? '-'}'),
                         Text('Talhão: ${t.talhao?.nome ?? '-'}'),
                         Text('Usuário: ${t.user?.username ?? '-'}'),
+                        Text('Tipo: ${t.entrada ? 'Entrada' : 'Saída'}'),
                       ],
                     ),
                   ),

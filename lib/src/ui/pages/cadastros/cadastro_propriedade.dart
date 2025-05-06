@@ -1,91 +1,74 @@
 import 'package:flutter/material.dart';
 import '../../../models/produtor.dart';
-import '../../../models/propriedade.dart';
+import '../../../services/api_propriedade.dart';
+
 
 class CadastroPropriedadePage extends StatefulWidget {
+  final VoidCallback onPropriedadeAdicionada;
   final List<Produtor> produtores;
-  final Function(Propriedade) onPropriedadeAdicionada;
 
-  CadastroPropriedadePage({
+  const CadastroPropriedadePage({
     Key? key,
     required this.onPropriedadeAdicionada,
-    required this.produtores
+    required this.produtores,
   }) : super(key: key);
 
   @override
-  _CadastroPropriedadePageState createState() => _CadastroPropriedadePageState();
+  State<CadastroPropriedadePage> createState() => _CadastroPropriedadePageState();
 }
 
 class _CadastroPropriedadePageState extends State<CadastroPropriedadePage> {
-  final TextEditingController _nomePropriedadeController = TextEditingController();
-  Produtor? _produtorSelecionado;  // Produtor selecionado para associar à propriedade
+  final TextEditingController _nomeController = TextEditingController();
+  final ApiPropriedade apiPropriedade = ApiPropriedade();
+  int? _produtorSelecionadoId;
 
-  void _salvarPropriedade() {
-    final nomePropriedade = _nomePropriedadeController.text;
+  void _salvar() async {
+    final nome = _nomeController.text;
+    final produtorId = _produtorSelecionadoId;
 
-    if (nomePropriedade.isNotEmpty && _produtorSelecionado != null) {
-      final novaPropriedade = Propriedade(nome: nomePropriedade, produtor: _produtorSelecionado!);
-      widget.onPropriedadeAdicionada(novaPropriedade);
-      Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Preencha todos os campos!')),
-      );
+    if (nome.isNotEmpty && produtorId != null) {
+      try {
+        await apiPropriedade.adicionarPropriedade(nome, produtorId);
+        widget.onPropriedadeAdicionada();
+        Navigator.pop(context);
+      } catch (e) {
+        print:("Teste");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao cadastrar propriedade')));
+      }
     }
   }
 
- /* @override
-void initState() {
-  super.initState();
-  // Se a lista de produtores não estiver vazia, inicialize com o primeiro produtor
-  if (widget.produtores.isNotEmpty) {
-    _produtorSelecionado = widget.produtores[0];
-  }
-}
-*/
   @override
   Widget build(BuildContext context) {
-    print('Teste ${widget.produtores}');
-
-    
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro de Propriedade')),
+      appBar: AppBar(title: Text('Cadastrar Propriedade')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
-              controller: _nomePropriedadeController,
-              decoration: const InputDecoration(labelText: 'Nome da Propriedade'),
+              controller: _nomeController,
+              decoration: InputDecoration(labelText: 'Nome da Propriedade'),
             ),
-            DropdownButton<Produtor>(
-              hint: const Text('Selecione um Produtor'),
-              value: _produtorSelecionado,
-              onChanged: (Produtor? novoProdutor) {
+            SizedBox(height: 16),
+            DropdownButtonFormField<int>(
+              decoration: InputDecoration(labelText: 'Produtor'),
+              items: widget.produtores
+                  .map((produtor) => DropdownMenuItem<int>(
+                        value: produtor.id,
+                        child: Text(produtor.nome),
+                      ))
+                  .toList(),
+              onChanged: (value) {
                 setState(() {
-                  _produtorSelecionado = novoProdutor;
+                  _produtorSelecionadoId = value;
                 });
               },
-              items: widget.produtores.isNotEmpty
-                  ? widget.produtores.map((Produtor produtor) {
-                      return DropdownMenuItem<Produtor>(
-                        value: produtor,
-                        child: Text(produtor.nome),
-                      );
-                    }).toList()
-                  : [
-                      const DropdownMenuItem(
-                        value: null,
-                        child: Text('Nenhum produtor disponível'),
-                      )
-                  ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top:16.0),
-              child: ElevatedButton(
-                onPressed: _salvarPropriedade,
-                child: const Text('Salvar Propriedade'),
-              ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _salvar,
+              child: Text('Salvar'),
             ),
           ],
         ),

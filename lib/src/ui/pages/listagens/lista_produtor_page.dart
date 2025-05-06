@@ -34,25 +34,27 @@ class _ListaProdutorPageState extends State<ListaProdutorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Lista de Produtores')),
+      appBar: AppBar(title: const Text('Lista de Produtores')),
       body: produtores.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: produtores.length,
               itemBuilder: (context, index) {
                 final p = produtores[index];
-                return ListTile(
-                  title: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Nome:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 4),
-                        Text(p.nome),
-                      ],
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Adiciona espaço entre os cards
+                  elevation: 4, // Dá uma leve sombra ao card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Faz as bordas do card arredondadas
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16), // Espaçamento interno
+                    title: Text(
+                      p.nome,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 );

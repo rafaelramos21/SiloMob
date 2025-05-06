@@ -4,7 +4,7 @@ import '../../../models/propriedade.dart';
 class ListaPropriedadesPage extends StatelessWidget {
   final List<Propriedade> propriedades;
 
-  ListaPropriedadesPage({Key? key, required this.propriedades}) : super(key: key);
+  const ListaPropriedadesPage({Key? key, required this.propriedades}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,22 @@ class ListaPropriedadesPage extends StatelessWidget {
         itemCount: propriedades.length,
         itemBuilder: (context, index) {
           final propriedade = propriedades[index];
-
-          return ListTile(
-            title: Text(propriedade.nome),
-            subtitle: Text('Produtor: ${propriedade.produtor.nome}'),
+          return Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListTile(
+                title: Text(
+                  propriedade.nome,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text('Produtor: ${propriedade.produtor.nome}'),
+              ),
+            ),
           );
         },
       ),

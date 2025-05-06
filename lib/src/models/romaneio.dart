@@ -9,6 +9,8 @@ class Romaneio {
   final double? descontoTotal;
   final Talhao? talhao;
   final User? user;
+  final bool entrada;
+
 
   Romaneio({
     required this.createdAt,
@@ -21,6 +23,8 @@ class Romaneio {
     this.descontoTotal,
     this.talhao,
     this.user,
+    required this.entrada,
+
   });
 
   factory Romaneio.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,7 @@ class Romaneio {
     descontoTotal: json['desconto_total'] != null ? double.tryParse(json['desconto_total'].toString()) : null,
     talhao: json['talhao'] != null ? Talhao.fromJson(json['talhao']) : null,
     user: json['user'] != null ? User.fromJson(json['user']) : null,
+    entrada: json['entrada'] ?? true,
   );
 }
 

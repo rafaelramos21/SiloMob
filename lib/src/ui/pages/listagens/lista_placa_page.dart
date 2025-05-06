@@ -17,7 +17,6 @@ class ListaPlacaPageState extends State<ListaPlacaPage> {
   void initState() {
     super.initState();
     _carregarPlacas();
-    
   }
 
   void _carregarPlacas() async {
@@ -27,7 +26,9 @@ class ListaPlacaPageState extends State<ListaPlacaPage> {
         placaList = lista;
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao carregar placas')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao carregar placas')),
+      );
     }
   }
 
@@ -42,17 +43,46 @@ class ListaPlacaPageState extends State<ListaPlacaPage> {
       body: placaList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
+              padding: EdgeInsets.all(16),
               itemCount: placaList.length,
               itemBuilder: (context, index) {
                 final p = placaList[index];
-                return ListTile(
-                  title: Center(
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Placa: ${p.placa}', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'Placa:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                         SizedBox(height: 4),
-                        Text('Modelo: ${p.modelo}'),
+                        Text(
+                          p.placa,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'Modelo:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          p.modelo,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ],
                     ),
                   ),

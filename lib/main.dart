@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projetosilo/src/ui/pages/login_page.dart';
-import 'package:provider/provider.dart';
-import 'src/controllers/produtor_provider.dart';
 //import 'package:projetosilo/src/ui/pages/home_page.dart';
 
 void main() {
-  runApp(
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => ProdutorProvider()),
-    ],
-    child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

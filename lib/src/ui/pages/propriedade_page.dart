@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:projetosilo/src/ui/pages/listagens/lista_propriedade_page.dart';
-import '../pages/cadastros/cadastro_propriedade.dart';
 import '../../models/propriedade.dart';
-import '../../controllers/produtor_provider.dart'; // Importa o Provider
+import '../../models/produtor.dart';
+import '../../services/api_propriedade.dart';
+import '../../services/api_produtor.dart';
+import 'cadastros/cadastro_propriedade.dart';
+import 'listagens/lista_propriedade_page.dart';
 
 class PropriedadePage extends StatefulWidget {
-  const PropriedadePage({super.key});
+  const PropriedadePage({Key? key}) : super(key: key);
 
   @override
   _PropriedadePageState createState() => _PropriedadePageState();
 }
 
 class _PropriedadePageState extends State<PropriedadePage> {
-  List<Propriedade> propriedades = [];
+  late Future<List<Propriedade>> _propriedades;
+  late Future<List<Produtor>> _produtores;
 
-  void _atualizarListaPropriedade(Propriedade propriedade) {
+  @override
+  void initState() {
+    super.initState();
+    _carregarDados();
+  }
+
+  void _carregarDados() {
+    _propriedades = ApiPropriedade().fetchPropriedades();
+    _produtores = ApiProdutor().fetchProdutores(); // Certifique-se de ter esse método implementado
+  }
+
+  void _atualizarLista() {
     setState(() {
-      propriedades.add(propriedade);
+      _carregarDados();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final produtores = Provider.of<ProdutorProvider>(context).produtores;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Propriedades'),
@@ -35,50 +46,44 @@ class _PropriedadePageState extends State<PropriedadePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              icon: const Icon(Icons.list_alt),
+              icon: const Icon(Icons.list),
               label: const Text('Lista de Propriedades'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(220, 60),
                 textStyle: const TextStyle(fontSize: 18),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListaPropriedadesPage(propriedades: propriedades),
-                  ),
-                );
+                _propriedades.then((lista) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ListaPropriedadesPage(propriedades: lista),
+                    ),
+                  );
+                });
               },
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              icon: const Icon(Icons.add_home_work), // ícone relacionado a propriedade/terra
+              icon: const Icon(Icons.add),
               label: const Text('Cadastrar Propriedade'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(220, 60),
                 textStyle: const TextStyle(fontSize: 18),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              onPressed: () {
-                if (produtores.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Cadastre um produtor primeiro!')),
-                  );
-                  return;
-                }
-
+              onPressed: () async {
+                final produtores = await ApiProdutor().fetchProdutores();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => CadastroPropriedadePage(
-                      onPropriedadeAdicionada: _atualizarListaPropriedade,
                       produtores: produtores,
+                      onPropriedadeAdicionada: _atualizarLista,
                     ),
                   ),
                 );
               },
-            ),
+            ),  
           ],
         ),
       ),

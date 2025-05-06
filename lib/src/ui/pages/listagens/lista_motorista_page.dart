@@ -37,20 +37,33 @@ class _ListaMotoristaPageState extends State<ListaMotoristaPage> {
       body: motoristasList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
+              padding: EdgeInsets.all(16),
               itemCount: motoristasList.length,
               itemBuilder: (context, index) {
                 final motorista = motoristasList[index];
-                return ListTile(
-                  title: Center(
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Nome:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                         SizedBox(height: 4),
-                        Text(motorista.nome),
+                        Text(
+                          motorista.nome,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ],
                     ),
                   ),
