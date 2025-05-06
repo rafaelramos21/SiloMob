@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # projetosilo
+=======
+# silo_mob_novo
+>>>>>>> 9420c86 (App funcionando APK Apenas)
 
 A new Flutter project.
 

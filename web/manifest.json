@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "projetosilo",
     "short_name": "projetosilo",
+=======
+    "name": "silo_mob_novo",
+    "short_name": "silo_mob_novo",
+>>>>>>> 9420c86 (App funcionando APK Apenas)
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -44,6 +44,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+<<<<<<< HEAD
+=======
+  
+  flutter_launcher_icons: ^0.13.1
+>>>>>>> 9420c86 (App funcionando APK Apenas)
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -95,3 +100,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+<<<<<<< HEAD
+=======
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/ScvcLogo.png"
+>>>>>>> 9420c86 (App funcionando APK Apenas)

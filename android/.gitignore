@@ -5,6 +5,10 @@ gradle-wrapper.jar
 /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
+<<<<<<< HEAD
+=======
+.cxx/
+>>>>>>> 9420c86 (App funcionando APK Apenas)
 
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/to/reference-keystore

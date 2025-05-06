@@ -1,6 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
     <application
         android:label="projetosilo"
+=======
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:label="Silo"
+>>>>>>> 9420c86 (App funcionando APK Apenas)
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
