@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 50),
             const CircleAvatar(
               radius: 80,
-              backgroundImage: AssetImage('assets/ScvcLogo.png'),
+              backgroundImage: AssetImage('assets/images/ScvcLogo.png'),
             ),
             const SizedBox(height: 50),
             InputField(

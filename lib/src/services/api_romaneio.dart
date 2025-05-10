@@ -32,7 +32,7 @@ class ApiTicket {
     required int limit,
   }) async {
     final token = await TokenStorage.getToken();
-    final url = '$baseUrl&limit=$limit&offset=$offset';
+    final url = '$baseUrl&limit=$limit&offset=$offset&ordering=-created_at';
 
     final response = await http.get(
       Uri.parse(url),
